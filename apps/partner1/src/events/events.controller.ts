@@ -7,8 +7,10 @@ import {
   Param,
   Delete,
   HttpCode,
+  UseGuards,
 } from '@nestjs/common';
 import { EventsService } from '@app/core/events/events.service';
+import { AuthGuard } from '@app/core/auth/auth.guard';
 import { CreateEventRequest } from './request/create-event.request';
 import { UpdateEventRequest } from './request/update-event.request';
 import { ReserveSpotRequest } from './request/reserve-spot.request';
@@ -43,6 +45,7 @@ export class EventsController {
     return this.eventsService.remove(id);
   }
 
+  @UseGuards(AuthGuard)
   @Post(':id/reserve')
   reserveSpots(
     @Body() reserveRequest: ReserveSpotRequest,
